@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#FFFFFF</color>
+    <color name="error">#B3261E</color>
+    <color name="errorContainer">#FFFFFF</color>
+    <color name="inverseOnSurface">#FFFFFF</color>
+    <color name="inversePrimary">#FFFFFF</color>
+    <color name="inverseSurface">#FFFFFF</color>
+    <color name="onBackground">#FFFFFF</color>
+    <color name="onError">#FFFFFF</color>
+    <color name="onErrorContainer">#FFFFFF</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="onPrimaryContainer">#FFFFFF</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="onSecondaryContainer">#1D192B</color>
+    <color name="onSurface">#1C1B1F</color>
+    <color name="onSurfaceVariant">#FFFFFF</color>
+    <color name="onTertiary">#FFFFFF</color>
+    <color name="onTertiaryContainer">#FFFFFF</color>
+    <color name="outline">#FFFFFF</color>
+    <color name="primary">#FFFFFF</color>
+    <color name="primaryContainer">#FFFFFF</color>
+    <color name="secondary">#FFFFFF</color>
+    <color name="secondaryContainer">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surfaceVariant">#FFFFFF</color>
+    <color name="tertiary">#FFFFFF</color>
+    <color name="tertiaryContainer">#FFFFFF</color>
+</resources>
