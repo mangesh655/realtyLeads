@@ -81,7 +81,7 @@ class CreateViewModel @Inject constructor(
     }
 
     private fun onUnitsChanged(selectedUnit: UnitDb?) {
-        this.selectedUnit = selectedUnit
+        this.selectedUnit =  selectedUnit
         getUnitDetailsFields()
     }
 
