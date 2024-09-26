@@ -7,47 +7,36 @@ import org.jetbrains.annotations.NotNull
 
 @Entity(
     tableName = "bookings",
-    primaryKeys = ["id"],
-    foreignKeys = [
-        ForeignKey(
-            entity = UnitDb::class,
-            parentColumns = arrayOf("id"),
-            childColumns = arrayOf("unit_id"),
-            onDelete = ForeignKey.CASCADE
-        )]
+    primaryKeys = ["booking_id"]
 )
 data class BookingDb(
-    @NotNull val id: String,
+    @NotNull @ColumnInfo("booking_id") val bookingId: String,
     @NotNull @ColumnInfo("project_name") val projectName: String,
     @NotNull @ColumnInfo("tower_name") val towerName: String,
     @NotNull @ColumnInfo("floor_number") val floorNumber: Int,
-    @NotNull @ColumnInfo("unit_number") val unitNumber: Int,
-    @NotNull val size: Int,
-    @NotNull @ColumnInfo("booking_advance") val bookingAdvance: Int,
-    @NotNull @ColumnInfo("agreement_value") val agreementValue: Int,
+    @NotNull @ColumnInfo("unit_number") val unitNumber: String,
+    @NotNull @ColumnInfo("unit_size") val unitSize: Int,
+    @NotNull @ColumnInfo("agreement_value") val agreementValue: Long,
     @NotNull @ColumnInfo("registration_date") val registrationDate: Long,
-    @NotNull @ColumnInfo("applicant_name") val applicantName: String,
-    @NotNull @ColumnInfo("applicant_id") val applicantId: String,
+    @NotNull @ColumnInfo("main_applicant_name") val mainApplicantName: String,
+    @NotNull @ColumnInfo("main_applicant_id") val mainApplicantId: String,
     @NotNull @ColumnInfo("co_applicant_ids") val coApplicantIds: String,
     @NotNull @ColumnInfo("created_at") val createdAt: Long,
-    @NotNull @ColumnInfo("unit_id") val unitId: String
 ) {
     companion object {
         val Empty = BookingDb(
-            id = "",
+            bookingId = "",
             projectName = "",
             towerName = "",
             floorNumber = 0,
-            unitNumber = 0,
-            size = 0,
-            bookingAdvance = 0,
+            unitNumber = "",
+            unitSize = 0,
             agreementValue = 0,
             registrationDate = 0,
-            applicantName = "",
-            applicantId = "",
+            mainApplicantName = "",
+            mainApplicantId = "",
             coApplicantIds = "",
-            createdAt = 0,
-            unitId = ""
+            createdAt = 0
         )
     }
 }

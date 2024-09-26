@@ -1,4 +1,4 @@
-package com.example.reltyleads.domain
+package com.example.reltyleads.create.domain
 
 import com.example.reltyleads.persistence.database.entity.ProjectDb
 import com.example.reltyleads.persistence.database.entity.TowerDb
@@ -7,7 +7,7 @@ import com.example.reltyleads.repository.model.Booking
 
 interface CreateUseCase {
 
-    suspend fun createBooking(booking: Booking)
+    suspend fun createBooking(booking: Booking) : Boolean
 
     suspend fun fetchProjects(): List<ProjectDb>
 

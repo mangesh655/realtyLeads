@@ -19,9 +19,14 @@ import com.example.reltyleads.common.theme.model.ComposeTheme
 val LightColorScheme = lightColorScheme(
     primary = primary,
     primaryContainer = primaryContainer,
-    secondary = secondary,
-    onPrimary = onPrimary,
-    background = background
+   onPrimary = onPrimary,
+   /* secondary = secondary,
+    secondaryContainer = secondary,
+    onSecondary = secondary,
+    background = background,
+    tertiary = secondary,
+    tertiaryContainer = secondary,
+    onTertiary = secondary,*/
 )
 
 /** Dark default theme color scheme. */

@@ -7,22 +7,22 @@ data class Booking(
     val projectName: String = "",
     val towerName: String = "",
     val floorNumber: Int = 0,
-    val unitNumber: Int = 0,
+    val unitNumber: String = "",
     val unitSize: Int = 0,
     val registrationDate: Long = 0,
-    val agreementValue: Int = 0,
+    val agreementValue: Long = 0,
     val applicantDetails: List<ApplicantDetails> = listOf()
 )
 
 data class ApplicantDetails(
-    private val fullName: String = "",
-    private val mobile: String = "",
-    private val email: String = "",
-    private val isMainApplicant: Boolean = false,
-    private val documents: List<ApplicantDocuments> = listOf()
+    val fullName: String = "",
+    val mobile: String = "",
+    val email: String = "",
+    val isMainApplicant: Boolean = false,
+    val documents: List<ApplicantDocument> = listOf()
 )
 
-data class ApplicantDocuments(
-    val name: String,
-    val documentType: DocumentType
+data class ApplicantDocument(
+    var name: String,
+    var documentType: DocumentType
 )

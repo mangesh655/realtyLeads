@@ -1,113 +1,9 @@
-package com.example.reltyleads.create.ui
+package com.example.reltyleads.create.ui.create
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.net.Uri
-import android.os.Environment
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.reltyleads.R
-import com.example.reltyleads.Listing.ui.displayCutoutWindowInsets
-import com.example.reltyleads.common.ui.BackIcon
-import com.example.reltyleads.common.ui.formatNumberWithComma
-import com.example.reltyleads.create.isNumber
-import com.example.reltyleads.create.model.FormField
-import com.example.reltyleads.create.model.InputType
-import com.example.reltyleads.create.model.TextInputType
-import com.example.reltyleads.create.viewmodel.CreateViewModel
-import com.example.reltyleads.theme.buttonColor
-import com.example.reltyleads.theme.sectionTitleColor
-import java.io.File
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-
-@Composable
-fun CreateRoute(
-    onBackClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    viewModel: CreateViewModel = hiltViewModel()
-) {
-    CreateScreenContent(modifier = modifier, viewModel, onBackClick)
-}
-
+/*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun CreateScreenContent(
+private fun CreateScreenContentOld(
     modifier: Modifier,
     viewModel: CreateViewModel,
     onBackClick: () -> Unit
@@ -140,7 +36,7 @@ private fun CreateScreenContent(
 }
 
 @Composable
-fun PageContent(contentPadding: PaddingValues, viewModel: CreateViewModel, modifier: Modifier) {
+fun PageContentOld(contentPadding: PaddingValues, viewModel: CreateViewModel, modifier: Modifier) {
 
     val unitDetailsForm by viewModel.unitsDetailsForm.collectAsStateWithLifecycle()
 
@@ -149,6 +45,7 @@ fun PageContent(contentPadding: PaddingValues, viewModel: CreateViewModel, modif
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
+
         FormSection(
             sectionName = "Unit Details",
             sectionIcon = R.drawable.floor_plan,
@@ -205,6 +102,7 @@ fun getApplicantFormContent(isMainApplicant: Boolean): Pair<Boolean, MutableList
         ), FormField(
             placeholder = "Phone number",
             type = InputType.Text(TextInputType.PHONE),
+            keyboardType = KeyboardType.Phone,
             text = "",
             isVisible = true,
             singleLine = true,
@@ -217,6 +115,7 @@ fun getApplicantFormContent(isMainApplicant: Boolean): Pair<Boolean, MutableList
         ), FormField(
             placeholder = "Email Address",
             type = InputType.Text(TextInputType.EMAIL),
+            keyboardType = KeyboardType.Email,
             text = "",
             isVisible = true,
             singleLine = true,
@@ -264,7 +163,6 @@ fun FormSection(
     viewModel: CreateViewModel,
     modifier: Modifier = Modifier
 ) {
-    val mutableFormFields = formFields.toMutableList()
 
     Column {
         Row(
@@ -290,12 +188,12 @@ fun FormSection(
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
-        mutableFormFields.forEachIndexed { index, field ->
+        formFields.forEach { field ->
             CustomInputFields(
                 onValueChange = {
-                    viewModel.onFieldValueChanged(it, field) { text ->
+                    /*viewModel.onFieldValueChanged(it, field) { text ->
                         mutableFormFields[index] = field.copy(text = text)
-                    }
+                    }*/
                 }, modifier = Modifier.fillMaxWidth(), field
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -313,15 +211,15 @@ fun CustomInputFields(
     when (formField.type) {
         is InputType.Text -> CustomTextInputField(onValueChange, modifier, formField)
         is InputType.Dropdown -> CustomDropdownInputField(
-            (formField.type as InputType.Dropdown).options, onValueChange, modifier, formField
+            formField.type.options, onValueChange, modifier, formField
         )
 
         is InputType.Date -> CustomDateInputField(
-            (formField.type as InputType.Date).dateFormat, onValueChange, modifier, formField
+            formField.type.dateFormat, onValueChange, modifier, formField
         )
 
         is InputType.File -> CustomFileInputField(
-            (formField.type as InputType.File).fileName, onValueChange, modifier, formField
+            formField.type.fileName, onValueChange, modifier, formField
         )
     }
 
@@ -340,6 +238,7 @@ fun CustomFileInputField(
     var selectedOption by remember { mutableIntStateOf(0) }
     var shouldLaunchGalleryPicker by remember { mutableStateOf(false) }
     var shouldLaunchCameraPicker by remember { mutableStateOf(false) }
+    var text by remember { mutableStateOf(field.text) }
 
     CustomTextInputField(onValueChange = {
         showdialog = true
@@ -375,7 +274,7 @@ fun CustomFileInputField(
                     "IMG_${(field.type as InputType.File).fileName}_${System.currentTimeMillis()}.jpg"
                 val savedFile = saveImageToPrivateStorage(context, image, fileName)
                 savedFile?.let { file ->
-                    //TODO: viewModel.insertFile(file)  // Save the file path to Room DB
+                    onValueChange(savedFile.path)
                 }
             }
             //resetting selectedOption after image is selected to re-initiate the flow if needed
@@ -543,12 +442,14 @@ fun CustomTextInputField(
                 if (isNumber(cleanTextInput)) textState else TextFieldValue("")
             } else textState,
             onValueChange = { input ->
-                if (isKeyboardTypeNumber) {
+                textState = input
+
+                field.onFormat?.let {
                     val previousCursorPosition = input.selection.start
                     val cleanInput = input.text.replace(",", "")
                     if (isNumber(cleanInput)) {
                         onValueChange(cleanInput)
-                        val formattedInput = formatNumberWithComma(cleanInput)
+                        val formattedInput = it(cleanInput)
                         val cursorOffset = formattedInput.length - cleanInput.length
                         val newCursorPosition = (previousCursorPosition + cursorOffset).coerceIn(
                             0,
@@ -557,7 +458,7 @@ fun CustomTextInputField(
                         textState =
                             TextFieldValue(formattedInput, selection = TextRange(newCursorPosition))
                     }
-                } else onValueChange(textState.text)
+                } ?: onValueChange(textState.text)
             },
             textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
             maxLines = field.maxLines,
@@ -829,3 +730,72 @@ fun CustomAttachmentPickerDialog(showDialog: Boolean, dismissRequest: (Int) -> U
         }
     }
 }
+
+ private fun getUnitDetailsFields() {
+        val unitDetails = mutableListOf(
+            FormField(
+                placeholder = "Project name",
+                type = InputType.Dropdown(projects.map { Pair(it.id, it.name) }),
+                text = "",
+                isVisible = true,
+                singleLine = true,
+            ), FormField(
+                placeholder = "Tower name",
+                type = InputType.Dropdown(towers.map { Pair(it.id, it.name) }),
+                text = "",
+                isVisible = true,
+                singleLine = true,
+            ), FormField(
+                placeholder = "Floor number",
+                type = InputType.Dropdown(floors.map { Pair(it, it) }),
+                text = "",
+                isVisible = true,
+                singleLine = true,
+            ), FormField(
+                placeholder = "Unit number",
+                type = InputType.Dropdown(units.map { Pair(it.id, it.number) }),
+                text = "",
+                isVisible = true,
+                singleLine = true,
+            ), FormField(
+                placeholder = "Unit size",
+                type = InputType.Text(TextInputType.NUMBER),
+                keyboardType = KeyboardType.Number,
+                isEnabled = false,
+                text = (selectedUnit?.size ?: "").toString(),
+                isVisible = true,
+                singleLine = true,
+                trailingIcon = {
+                    Text(
+                        text = "sqft",
+                        color = Color.Gray,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            ), FormField(
+                placeholder = "Expected Registration Date",
+                type = InputType.Date("dd MMM, YYYY"),
+                text = "",
+                isVisible = true,
+                singleLine = true,
+                isEnabled = false,
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Outlined.DateRange,
+                        contentDescription = "Date Set Icon",
+                        tint = Color.Gray
+                    )
+                }
+            ), FormField(
+                placeholder = "Agreement Value",
+                type = InputType.Text(TextInputType.NUMBER),
+                keyboardType = KeyboardType.Number,
+                text = "",
+                onFormat = ::formatNumberWithComma,
+                isVisible = true,
+                singleLine = true,
+            )
+        )
+        _unitsDetailsForm.value = unitDetails
+    }
+*/

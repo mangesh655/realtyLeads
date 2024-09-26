@@ -4,7 +4,7 @@ import java.text.NumberFormat
 import java.util.Locale
 
 fun formatNumberWithComma(input: String): String {
-    return if (input.isNotEmpty()) {
+    return if (input.isNotBlank()) {
         val number = input.replace(",", "").toLongOrNull()
         number?.let {
             NumberFormat.getNumberInstance(Locale.US).format(it)
